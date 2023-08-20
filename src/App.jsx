@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import Pricing from "./pages/Pricing";
 import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
+import AppLayout from "./pages/AppLayout";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/app" element={<AppLayout />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
