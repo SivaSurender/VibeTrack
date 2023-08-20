@@ -1,7 +1,13 @@
 import React from "react";
+import NavBar from "../components/NavBar";
 
 function Pricing() {
-  return <div>Pricing</div>;
+  return (
+    <div>
+      <NavBar />
+      Pricing
+    </div>
+  );
 }
 
 export default Pricing;

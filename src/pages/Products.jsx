@@ -1,5 +1,11 @@
 import React from "react";
+import NavBar from "../components/NavBar";
 
 export default function Products() {
-  return <div>Products</div>;
+  return (
+    <div>
+      <NavBar />
+      Products
+    </div>
+  );
 }
