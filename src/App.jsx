@@ -17,19 +17,23 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    const controller = new AbortController();
     const getCity = async () => {
       setIsLoading(true);
       try {
-        const fetchData = await fetch(`${BASE_URL}cities`);
+        const fetchData = await fetch(`${BASE_URL}cities`, {
+          signal: controller.signal,
+        });
         const fetchedData = await fetchData.json();
         setCities(fetchedData);
       } catch (e) {
-        console.log(console.error());
+        console.log(e, "Error from api");
       } finally {
         setIsLoading(false);
       }
     };
     getCity();
+    return () => controller.abort();
   }, []);
   return (
     <div>
