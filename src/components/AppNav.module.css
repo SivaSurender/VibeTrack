@@ -3,7 +3,6 @@
   margin-bottom: 2rem;
 }
 
-/* 
 .nav ul {
   list-style: none;
   display: flex;
@@ -25,4 +24,4 @@
 
 .nav a:global(.active) {
   background-color: var(--color-dark--0);
-} */
+}
