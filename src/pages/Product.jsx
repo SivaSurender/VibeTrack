@@ -1,11 +1,16 @@
 import styles from "./Product.module.css";
-import img from "../img-1.jpg";
+import NavBar from "../components/NavBar";
+import imageOne from "../img-1.jpg";
 
 export default function Product() {
   return (
     <main className={styles.product}>
+      <NavBar />
       <section>
-        <img src={img} alt="person with dog overlooking mountain with sunset" />
+        <img
+          src={imageOne}
+          alt="person with dog overlooking mountain with sunset"
+        />
         <div>
           <h2>About WorldWide.</h2>
           <p>

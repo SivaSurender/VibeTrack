@@ -1,22 +1,17 @@
 .nav {
-  /* display: flex;
+  display: flex;
   align-items: center;
-  justify-content: space-between; */
-  background-color: orangered;
+  justify-content: space-between;
 }
 
 .nav ul {
   list-style: none;
   display: flex;
-  justify-content: space-between;
-  /* align-items: center;
-  gap: 4rem; */
-}
-.nav :global(.active) {
-  background-color: green;
+  align-items: center;
+  gap: 4rem;
 }
 
-/* .nav a:link,
+.nav a:link,
 .nav a:visited {
   text-decoration: none;
   color: var(--color-light--2);
@@ -25,6 +20,7 @@
   font-weight: 600;
 }
 
+/* CSS Modules feature */
 .nav a:global(.active) {
   color: var(--color-brand--2);
 }
@@ -35,4 +31,4 @@ a.ctaLink:visited {
   color: var(--color-dark--0);
   padding: 0.8rem 2rem;
   border-radius: 7px;
-} */
+}

@@ -6,7 +6,7 @@ import AppNav from "../components/AppNav";
 export default function Homepage() {
   return (
     <main className={styles.homepage}>
-      <AppNav />
+      <NavBar />
       <section>
         <h1>
           You travel the world.

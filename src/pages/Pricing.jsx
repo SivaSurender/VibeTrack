@@ -1,9 +1,12 @@
 // Uses the same styles as Product
 import styles from "./Product.module.css";
+import imgfdsf from "../img-2.jpg";
+import NavBar from "../components/NavBar";
 
-export default function Product() {
+export default function Pricing() {
   return (
     <main className={styles.product}>
+      <NavBar />
       <section>
         <div>
           <h2>
@@ -17,7 +20,7 @@ export default function Product() {
             voluptatem iste.
           </p>
         </div>
-        <img src="img-2.jpg" alt="overview of a large city with skyscrapers" />
+        <img src={imgfdsf} alt="overview of a large city with skyscrapers" />
       </section>
     </main>
   );
