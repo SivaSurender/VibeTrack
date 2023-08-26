@@ -7,6 +7,17 @@ function CityContextProvider({ children }) {
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currCity, setCurrentCity] = useState({});
+  const [mapPos, setMapPos] = useState([40, 0]);
+  const uniqueCountries = cities?.reduce((accu, curr) => {
+    const matchedCountries = accu?.find(
+      (each) => each.country === curr.country
+    );
+
+    if (!matchedCountries) {
+      accu.push(curr);
+    }
+    return accu;
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -36,6 +47,9 @@ function CityContextProvider({ children }) {
         setIsLoading,
         currCity,
         setCurrentCity,
+        uniqueCountries,
+        mapPos,
+        setMapPos,
       }}
     >
       {children}

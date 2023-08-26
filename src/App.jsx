@@ -11,7 +11,7 @@ import CityList from "./components/CityList";
 import CountryList from "./components/CountryList";
 import City from "./components/City";
 import Form from "./components/Form";
-import { CityContextProvider, useCity } from "./conetxt/CityContextProvider";
+import { CityContextProvider } from "./context/CityContextProvider";
 
 function AppContext() {
   return (

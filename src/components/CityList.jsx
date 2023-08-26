@@ -3,7 +3,7 @@ import Spinner from "./Spinner";
 import styles from "./CityList.module.css";
 import CityItem from "./CityItem";
 import Message from "./Message";
-import { useCity } from "../conetxt/CityContextProvider";
+import { useCity } from "../context/CityContextProvider";
 
 function CityList() {
   const { cities, isLoading } = useCity();

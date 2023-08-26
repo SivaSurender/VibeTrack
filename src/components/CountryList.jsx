@@ -4,20 +4,11 @@ import styles from "./CityList.module.css";
 
 import Message from "./Message";
 import CountryItem from "./CountryItem";
-import { useCity } from "../conetxt/CityContextProvider";
+import { useCity } from "../context/CityContextProvider";
 
 function CountryList() {
-  const { cities, isLoading } = useCity();
-  const uniqueCountries = cities?.reduce((accu, curr) => {
-    const matchedCountries = accu?.find(
-      (each) => each.country === curr.country
-    );
+  const { uniqueCountries, isLoading } = useCity();
 
-    if (!matchedCountries) {
-      accu.push(curr);
-    }
-    return accu;
-  }, []);
   if (isLoading) return <Spinner />;
   if (!uniqueCountries || uniqueCountries.length <= 0)
     return (
