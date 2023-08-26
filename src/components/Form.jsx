@@ -1,12 +1,14 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import styles from "./Form.module.css";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 import BackButton from "./BackButton";
+import { useCity } from "../context/CityContextProvider";
 import { useUrlParams } from "../hooks/CustomHooks";
+import Spinner from "./Spinner";
 
 export function convertToEmoji(countryCode) {
   const codePoints = countryCode
@@ -22,6 +24,31 @@ function Form() {
   const [date, setDate] = useState(new Date());
   const [notes, setNotes] = useState("");
   const pos = useUrlParams();
+
+  const lat = pos[0];
+  const lng = pos[1];
+  const { isLoading, setIsLoading } = useCity();
+
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
+      try {
+        const init = await fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${pos[0]}&longitude=${pos[1]}`
+        );
+        const data = await init.json();
+        setCityName(data.city || data.locality || "");
+        setCountry(data.countryName || "");
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, [lat, lng]);
+
+  if (isLoading) return <Spinner />;
 
   return (
     <form className={styles.form}>
