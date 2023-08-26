@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export function useGeolocation(defaultPos = null) {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,4 +26,13 @@ export function useGeolocation(defaultPos = null) {
   }
 
   return { isLoading, position, error, getPosition };
+}
+
+export function useUrlParams() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const lat = searchParams.get("lat");
+  const lng = searchParams.get("lng");
+
+  return [lat, lng];
 }

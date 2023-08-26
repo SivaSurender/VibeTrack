@@ -83,8 +83,10 @@ function ChangeCenter({ position }) {
 const DetectClick = () => {
   const navigate = useNavigate();
   useMapEvent({
-    click: (event) =>
-      navigate(`form?lat=${event.latlng.lat}&lng=${event.latlng.lng}`),
+    click: (event) => {
+      console.log(event);
+      navigate(`form?lat=${event.latlng.lat}&lng=${event.latlng.lng}`);
+    },
   });
 };
 export default MapView;
