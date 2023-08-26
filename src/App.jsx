@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Pricing from "./pages/Pricing";
 
@@ -45,10 +45,12 @@ function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/products" element={<Product />} />
           <Route path="/app" element={<AppLayout />}>
-            <Route
-              index
-              element={<CityList cities={cities} isLoading={isLoading} />}
-            />
+            {/* Navigate is kind of redirect where index reached below component
+            and navigate redirects directly to cities path at index,
+            replace is needed top go back as it replaces the current component in
+            history stack
+            */}
+            <Route index element={<Navigate to="cities" replace />} />
             <Route
               path="cities"
               element={<CityList cities={cities} isLoading={isLoading} />}
