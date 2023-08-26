@@ -1,10 +1,32 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+export const BASE_URL = "http://localhost:9000/";
 
 const CityContext = createContext();
 
 function CityContextProvider({ children }) {
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currCity, setCurrentCity] = useState({});
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const getCity = async () => {
+      setIsLoading(true);
+      try {
+        const fetchData = await fetch(`${BASE_URL}cities`, {
+          signal: controller.signal,
+        });
+        const fetchedData = await fetchData.json();
+        setCities(fetchedData);
+      } catch (e) {
+        console.log(e, "Error from api");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getCity();
+    // return () => controller.abort();
+  }, []);
   return (
     <CityContext.Provider
       value={{
@@ -12,6 +34,8 @@ function CityContextProvider({ children }) {
         setCities,
         isLoading,
         setIsLoading,
+        currCity,
+        setCurrentCity,
       }}
     >
       {children}

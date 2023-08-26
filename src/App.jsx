@@ -13,29 +13,7 @@ import City from "./components/City";
 import Form from "./components/Form";
 import { CityContextProvider, useCity } from "./conetxt/CityContextProvider";
 
-export const BASE_URL = "http://localhost:9000/";
-
 function AppContext() {
-  const { setCities, setIsLoading } = useCity();
-  useEffect(() => {
-    const controller = new AbortController();
-    const getCity = async () => {
-      setIsLoading(true);
-      try {
-        const fetchData = await fetch(`${BASE_URL}cities`, {
-          signal: controller.signal,
-        });
-        const fetchedData = await fetchData.json();
-        setCities(fetchedData);
-      } catch (e) {
-        console.log(e, "Error from api");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getCity();
-    // return () => controller.abort();
-  }, []);
   return (
     <div>
       <BrowserRouter>
