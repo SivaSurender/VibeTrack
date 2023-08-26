@@ -2,6 +2,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import styles from "./City.module.css";
 import { BASE_URL, useCity } from "../conetxt/CityContextProvider";
 import { useEffect } from "react";
+import Spinner from "./Spinner";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -20,20 +21,27 @@ function City() {
     date: "2027-10-31T15:59:59.138Z",
     notes: "My favorite city so far!",
   };
-  const { currCity, setCurrentCity } = useCity();
+  const { currCity, setCurrentCity, isLoading, setIsLoading } = useCity();
 
   useEffect(() => {
     const fetchCity = async () => {
-      const init = await fetch(`${BASE_URL}cities/${id}`);
+      setIsLoading(true);
+      try {
+        const init = await fetch(`${BASE_URL}cities/${id}`);
 
-      const data = await init.json();
-      setCurrentCity(data);
+        const data = await init.json();
+        setCurrentCity(data);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchCity();
   }, []);
 
   const { cityName, emoji, date, notes } = currCity;
+
+  if (isLoading) return <Spinner />;
   return (
     <div className={styles.city}>
       <div className={styles.row}>
