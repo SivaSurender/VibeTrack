@@ -4,8 +4,10 @@ import styles from "./CityList.module.css";
 
 import Message from "./Message";
 import CountryItem from "./CountryItem";
+import { useCity } from "../conetxt/CityContextProvider";
 
-function CountryList({ cities, isLoading }) {
+function CountryList() {
+  const { cities, isLoading } = useCity();
   const uniqueCountries = cities?.reduce((accu, curr) => {
     const matchedCountries = accu?.find(
       (each) => each.country === curr.country
