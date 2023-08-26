@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./CityItem.module.css";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -11,9 +11,16 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 function CityItem({ city }) {
-  const { cityName, emoji, date, id } = city;
+  const {
+    cityName,
+    emoji,
+    date,
+    id,
+    position: { lat, lng },
+  } = city;
+
   return (
-    <Link className={styles.cityItem} to={`${id}`}>
+    <Link className={styles.cityItem} to={`${id}?lat=${lat}&lng=${lng}`}>
       <li>
         <span className={styles.emoi}>{emoji}</span>
         <h3 className={styles.name}>{cityName}</h3>
