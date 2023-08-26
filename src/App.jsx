@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Product from "./pages/Product";
 import CityList from "./components/CityList";
 import CountryList from "./components/CountryList";
+import City from "./components/City";
 
 export const BASE_URL = "http://localhost:9000/";
 
@@ -33,7 +34,7 @@ function App() {
       }
     };
     getCity();
-    return () => controller.abort();
+    // return () => controller.abort();
   }, []);
   return (
     <div>
@@ -51,6 +52,7 @@ function App() {
               path="cities"
               element={<CityList cities={cities} isLoading={isLoading} />}
             />
+            <Route path="cities/:id" element={<City />} />
             <Route
               path="countries"
               element={<CountryList cities={cities} isLoading={isLoading} />}
