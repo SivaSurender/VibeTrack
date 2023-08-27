@@ -6,11 +6,12 @@ import styles from "./Form.module.css";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 import BackButton from "./BackButton";
-import { useCity } from "../context/CityContextProvider";
+import { BASE_URL, useCity } from "../context/CityContextProvider";
 import { useUrlParams } from "../hooks/CustomHooks";
 import Spinner from "./Spinner";
 
 export function convertToEmoji(countryCode) {
+  const navigate = useNavigate();
   const codePoints = countryCode
     .toUpperCase()
     .split("")
@@ -27,7 +28,48 @@ function Form() {
 
   const lat = pos[0];
   const lng = pos[1];
-  const { isLoading, setIsLoading } = useCity();
+  const { isLoading, setIsLoading, setCities } = useCity();
+  const navigate = useNavigate();
+
+  function handleCreateCity(event) {
+    event.preventDefault();
+
+    const createdCity = {
+      id: Date.now(),
+      date: Date.now(),
+      cityName,
+      country,
+      notes,
+      position: {
+        lat,
+        lng,
+      },
+      emoji: "🇩🇪",
+      country: cityName,
+    };
+    // createCity(createdCity);
+    setCities((city) => [...city, createdCity]);
+    navigate("/app/cities");
+  }
+  async function createCity(createdCity) {
+    const bods = JSON.stringify(createdCity);
+    console.log(bods, "bods");
+    try {
+      const init = await fetch(BASE_URL + "cities", {
+        method: "POST",
+        body: createdCity,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(createdCity, "createdCity");
+      console.log(init, "init");
+      const data = init && (await init.text());
+      console.log(data, "dusdgyhsgd");
+    } catch (e) {
+      console.log(e, "sdsdsd");
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -37,6 +79,7 @@ function Form() {
           `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${pos[0]}&longitude=${pos[1]}`
         );
         const data = await init.json();
+        console.log(data);
         setCityName(data.city || data.locality || "");
         setCountry(data.countryName || "");
       } catch (e) {
@@ -51,7 +94,7 @@ function Form() {
   if (isLoading) return <Spinner />;
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={(event) => handleCreateCity(event)}>
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
