@@ -9,6 +9,10 @@ import BackButton from "./BackButton";
 import { BASE_URL, useCity } from "../context/CityContextProvider";
 import { useUrlParams } from "../hooks/CustomHooks";
 import Spinner from "./Spinner";
+import Message from "./Message";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 export function convertToEmoji(countryCode) {
   const navigate = useNavigate();
@@ -50,28 +54,33 @@ function Form() {
     // createCity(createdCity);
     setCities((city) => [...city, createdCity]);
     navigate("/app/cities");
+    createCity(createdCity);
   }
   async function createCity(createdCity) {
-    const bods = JSON.stringify(createdCity);
-    console.log(bods, "bods");
+    const myHeader = new Headers();
+    myHeader.append("Content-Type", "application/json");
     try {
-      const init = await fetch(BASE_URL + "cities", {
+      const init = await fetch(`${BASE_URL}cities/`, {
         method: "POST",
-        body: createdCity,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        body: JSON.stringify(createdCity),
+        headers: myHeader,
       });
-      console.log(createdCity, "createdCity");
-      console.log(init, "init");
-      const data = init && (await init.text());
-      console.log(data, "dusdgyhsgd");
+      if (init.ok) {
+        const responseArray = await init.json(); // Parse the response as JSON
+        console.log(responseArray); // This will be an array of objects
+      } else {
+        // Handle the error response here
+        const errorResponse = await init.text(); // Parse the error response as text
+        console.error("Request failed with status: " + init.status);
+        console.error("Error response: " + errorResponse);
+      }
     } catch (e) {
       console.log(e, "sdsdsd");
     }
   }
 
   useEffect(() => {
+    if (!lat || !lng) return;
     async function fetchData() {
       setIsLoading(true);
       try {
@@ -92,7 +101,11 @@ function Form() {
   }, [lat, lng]);
 
   if (isLoading) return <Spinner />;
-
+  if (!lat || !lng)
+    return (
+      <Message message="Add your first city by clicking on a city from the map" />
+    );
+  console.log(notes);
   return (
     <form className={styles.form} onSubmit={(event) => handleCreateCity(event)}>
       <div className={styles.row}>
@@ -107,10 +120,16 @@ function Form() {
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
-        <input
+        {/* <input
           id="date"
           onChange={(e) => setDate(e.target.value)}
           value={date}
+        /> */}
+        <DatePicker
+          id="date"
+          selected={date}
+          onChange={(date) => setDate(date)}
+          dateFormat="dd-MM-yyyy"
         />
       </div>
 

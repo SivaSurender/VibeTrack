@@ -28,6 +28,7 @@ function CityContextProvider({ children }) {
           signal: controller.signal,
         });
         const fetchedData = await fetchData.json();
+        console.log(fetchedData, "fetched data");
         setCities(fetchedData);
       } catch (e) {
         console.log(e, "Error from api");
