@@ -13,6 +13,7 @@ import City from "./components/City";
 import Form from "./components/Form";
 import { CityContextProvider } from "./context/CityContextProvider";
 import { PlaceHolderAuthContext } from "./context/PlaceHolderAuthContext";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function AppContext() {
   return (
@@ -22,7 +23,14 @@ function AppContext() {
           <Route index element={<HomePage />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/products" element={<Product />} />
-          <Route path="/app" element={<AppLayout />}>
+          <Route
+            path="/app"
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
             {/* Navigate is kind of redirect where index reached below component
             and navigate redirects directly to cities path at index,
             replace is needed top go back as it replaces the current component in
