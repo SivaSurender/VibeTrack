@@ -12,6 +12,7 @@ import CountryList from "./components/CountryList";
 import City from "./components/City";
 import Form from "./components/Form";
 import { CityContextProvider } from "./context/CityContextProvider";
+import { PlaceHolderAuthContext } from "./context/PlaceHolderAuthContext";
 
 function AppContext() {
   return (
@@ -44,7 +45,9 @@ function AppContext() {
 function App() {
   return (
     <CityContextProvider>
-      <AppContext />
+      <PlaceHolderAuthContext>
+        <AppContext />
+      </PlaceHolderAuthContext>
     </CityContextProvider>
   );
 }
